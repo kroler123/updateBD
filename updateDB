@@ -1,0 +1,49 @@
+#!groovy
+// Check properties
+properties([disableConcurrentBuilds()])
+
+pipeline {
+	agent {
+		label 'master'
+	}
+	parameters {
+		string(name: 'number',defaultValue: 'null',description: 'Salon number')
+
+		booleanParam(name: 'domain',defaultValue: true ,description: 'Take the domain name from salon number')
+
+		booleanParam(name: 'inip',defaultValue: true ,description: 'Take the ip address router from salon number')
+
+		booleanParam(name: 'atsip',defaultValue: true ,description: 'Take the ip address ATS from salon number')
+
+		booleanParam(name: 'dc',defaultValue: true ,description: 'Take the ip address DC from salon number')
+
+		booleanParam(name: 'virt',defaultValue: true ,description: 'Take the ip address Proxmox/VMware from salon number')
+
+		string(name: 'city',defaultValue: 'null',description: 'Enter the name of the city')
+
+		string(name: 'street',defaultValue: 'null',description: 'Enter address')
+
+		choice(name: 'port',choices:['222','22'],description: 'Select the port')
+
+		choice(name: 'type',choices:['edge','Devil'],description: 'Select the port')
+
+		choice(name: 'timezone',choices:['Europe/Moscow','Asia/Yekaterinburg','Asia/Omsk'],description: 'Select timezone')
+
+		choice(name: 'virtual',choices:['proxmox','vmware'],description: 'Select virtual server')
+	}
+        options {
+                buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+                timestamps()
+                skipStagesAfterUnstable()
+                disableConcurrentBuilds()
+        }
+	stages {
+		stage("Добавление информации в базу") {
+			steps {
+				script {
+					sh (script: 'mysql -h 192.168.102.2 -u kalinkin -p159753 -Bse "Use RBT; INSERT INTO rbt (Name,Domain,In_IP,ATC_IP,Domain_Controller,VMWare,City,Adress,Port,Type,timezone,virtual) VALUE (${number},${domain},${inip},${atsip},${dc},${virt},${city},${street},${port},${type},${timezone},${virtual})"')
+				}
+			}
+		}
+	}
+}
