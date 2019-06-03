@@ -41,28 +41,28 @@ pipeline {
 		stage("Добавление информации в базу") {
 			steps {
 				script {
-					GET_DOMAIN = sh(
-						script: 's' + params.number + '.rbt1.ru',
+					GET_DOMAIN = sh (
+						script: 'echo s' + params.number + '.rbt1.ru',
 						label: 'Get domain name',
 						returnStdout: true
 					).trim()
-					GET_INIP = sh(
-						script: '10.20.' + params.number + '.1',
+					GET_INIP = sh (
+						script: 'echo 10.20.' + params.number + '.1',
 						label: 'Get router ip',
 						returnStdout: true
 					).trim()
-					GET_ATS = sh(
-						script: '10.20.' + params.number + '.20',
+					GET_ATS = sh (
+						script: 'echo 10.20.' + params.number + '.20',
 						label: 'Get ats ip',
 						returnStdout: true
 					).trim()
-					GET_DC = sh(
-						script: '10.20.' + params.number + '.4',
+					GET_DC = sh (
+						script: 'echo 10.20.' + params.number + '.4',
 						label: 'Get domain name',
 						returnStdout: true
 					).trim()
-					GET_VIRT = sh(
-						script: '10.20.' + params.number + '.6',
+					GET_VIRT = sh (
+						script: 'echo 10.20.' + params.number + '.6',
 						label: 'Get domain name',
 						returnStdout: true
 					).trim()
