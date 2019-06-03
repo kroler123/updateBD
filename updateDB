@@ -41,7 +41,32 @@ pipeline {
 		stage("Добавление информации в базу") {
 			steps {
 				script {
-					sh (script: 'mysql -h 192.168.102.2 -u kalinkin -p159753 -Bse "Use RBT; INSERT INTO rbt (Name,Domain,In_IP,ATC_IP,Domain_Controller,VMWare,City,Adress,Port,Type,timezone,virtual) VALUE (${number},${domain},${inip},${atsip},${dc},${virt},${city},${street},${port},${type},${timezone},${virtual})"')
+					GET_DOMAIN = sh(
+						script: 's' + params.domain + '.rbt1.ru',
+						label: 'Get domain name',
+						returnStdout: true
+					).trim()
+					GET_INIP = sh(
+						script: '10.20.' + params.inip + '.1',
+						label: 'Get router ip',
+						returnStdout: true
+					).trim()
+					GET_ATS = sh(
+						script: '10.20.' + params.atsip + '.20',
+						label: 'Get ats ip',
+						returnStdout: true
+					).trim()
+					GET_DC = sh(
+						script: '10.20.' + params.dc + '.4',
+						label: 'Get domain name',
+						returnStdout: true
+					).trim()
+					GET_VIRT = sh(
+						script: '10.20.' + params.virt + '.6',
+						label: 'Get domain name',
+						returnStdout: true
+					).trim()
+					sh (script: 'mysql -h 192.168.102.2 -u kalinkin -p159753 -Bse "Use RBT; INSERT INTO rbt (Name,Domain,In_IP,ATC_IP,Domain_Controller,VMWare,City,Adress,Port,Type,timezone,virtual) VALUE (${number},$GET_DOMAIN,$GET_INIP,$GET_ATS,$GET_DC,$GET_VIRT,${city},${street},${port},${type},${timezone},${virtual})"')
 				}
 			}
 		}
