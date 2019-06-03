@@ -66,7 +66,7 @@ pipeline {
 						label: 'Get domain name',
 						returnStdout: true
 					).trim()
-					sh (script: 'mysql -h 192.168.102.2 -u kalinkin -p159753 RBT -Bse \"INSERT INTO rbt(Name,Domain) VALUES (${number},' + GET_DOMAIN + ')\" -D RBT')
+					sh (script: 'mysql -h 192.168.102.2 -u kalinkin -p159753 RBT -Bse \"INSERT INTO rbt(Name,Domain) VALUES (${number},123)\" -D RBT')
 //					sh (script: 'mysql -h 192.168.102.2 -u kalinkin -p159753 RBT -Bse "INSERT INTO rbt VALUES (${number},' + GET_DOMAIN + ',' + GET_INIP + ',null,' + GET_ATS + ',null,null,null,null,null,${city},\"${street}\",null,null,null,' + GET_DC + ',null,null,null,null,' + GET_VIRT + ',${port},${type},null,null,${timezone},null,null,null,null,null,${virtual})" -D RBT')
 //					sh (script: 'mysql -h 192.168.102.2 -u kalinkin -p159753 -Bse "USE RBT;INSERT INTO rbt (Name,Domain,In_IP,ATC_IP,Domain_Controller,VMWare,City,Adress,Port,Type,timezone,virtual) VALUES(${number},' + GET_DOMAIN + ',' + GET_INIP + ',' + GET_ATS + ',' + GET_DC + ',' + GET_VIRT + ',${city},\"${street}\",${port},${type},${timezone},${virtual});"')
 				}
