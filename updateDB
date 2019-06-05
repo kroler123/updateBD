@@ -52,14 +52,14 @@ pipeline {
 							label: 'Get domain name',
 							returnStdout: true
 						).trim()
-						return true
+						return GET_DOMAIN
 					}	else	{
 						def GET_DOMAIN = sh (
 							script: 'echo null',
 							label: 'Get domain name',
 							returnStdout: true
 						).trim()
-						return true
+						return GET_DOMAIN
 					}
 					if ( params.inip == true ) {
 						def GET_INIP = sh (
@@ -67,14 +67,14 @@ pipeline {
 							label: 'Get router ip',
 							returnStdout: true
 						).trim()
-					return true
+					return GET_INIP
 					}	else	{
 						def GET_INIP = sh (
 							script: 'echo null',
 							label: 'Get router ip',
 							returnStdout: true
 						).trim()		
-					return true			
+					return GET_INIP			
 					}
 					def GET_ATS = sh (
 						script: 'echo 10.20.' + params.number + '.20',
