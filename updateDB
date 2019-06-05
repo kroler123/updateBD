@@ -53,8 +53,8 @@ pipeline {
 							returnStdout: true
 						).trim()
 					}	else	{
-						GET_DOMAIN = sh (
-							script: 'echo null',
+						def GET_DOMAIN = sh (
+							script: 'echo nothing',
 							label: 'Get domain name',
 							returnStdout: true
 						).trim()
@@ -86,7 +86,7 @@ pipeline {
 		}
 		stage("Update DB") {
 			when {
-				expression { params.update == update }
+				expression { params.update == 'update' }
 			}
 			steps {
 				script {
