@@ -51,14 +51,14 @@ pipeline {
 							script: 'echo s' + params.number + '.rbt1.ru',
 							label: 'Get domain name',
 							returnStdout: true
-						).trim()
+						).trim(),
 						return true
 					}	else	{
 						def GET_DOMAIN = sh (
 							script: 'echo null',
 							label: 'Get domain name',
 							returnStdout: true
-						).trim()
+						).trim(),
 						return true
 					}
 					def GET_INIP = sh (
