@@ -79,7 +79,7 @@ pipeline {
 						label: 'Get domain name',
 						returnStdout: true
 					).trim()
-					sh (script: "$GET_DOMAIN")
+					sh (script: "echo $GET_DOMAIN")
 //					sh (script: "mysql -h 192.168.102.2 -u kalinkin -p159753 RBT -Bse \"INSERT INTO rbt(Name,Domain,In_IP,ATC_IP,City,Adress,Domain_Controller,VMWare,Port,Type,timezone,virtual) VALUES('$number','$GET_DOMAIN','$GET_INIP','$GET_ATS','$city','$street','$GET_DC','$GET_VIRT','$port','$type','$timezone','$virtual')\" -D RBT")
 //					sh (script: "mysql -h 192.168.102.2 -u kalinkin -p159753 RBT -Bse "UPDATE rbt SET Backup_server= '10.20.150.8' WHERE Name = 150" -D RBT")
 				}
