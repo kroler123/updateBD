@@ -84,22 +84,21 @@ pipeline {
 				}
 			}
 		}
-		stage("Update DB") {
-			when {
-				expression { params.update == 'update' }
-			}
-			steps {
-				script {
-/**					GET_NameDC = sh (
-						script: '''
-						nmap
-						''',
-						label: '',
-						returnStdout: true
-					)*/
-					echo "Hello"
-				}
-			}
-		}
+//		stage("Update DB") {
+//			when {
+//				expression { params.update == 'update' }
+//			}
+//			steps {
+//				script {
+//					GET_NameDC = sh (
+//						script: '''
+//						nmap
+//						''',
+//						label: '',
+//						returnStdout: true
+//					)
+//				}
+//			}
+//		}
 	}
 }
