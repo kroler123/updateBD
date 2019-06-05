@@ -9,6 +9,8 @@ pipeline {
 	parameters {
 		string(name: 'number',defaultValue: 'null',description: 'Salon number')
 
+		choice(name: 'update',choices:['new','update'],description: 'Select update DB or new across DB')
+
 		booleanParam(name: 'domain',defaultValue: true ,description: 'Take the domain name from salon number')
 
 		booleanParam(name: 'inip',defaultValue: true ,description: 'Take the ip address router from salon number')
@@ -39,13 +41,24 @@ pipeline {
         }
 	stages {
 		stage("Добавление информации в базу") {
+			when {
+				expression { params.update == 'new' }
+			}
 			steps {
 				script {
-					def GET_DOMAIN = sh (
-						script: 'echo s' + params.number + '.rbt1.ru',
-						label: 'Get domain name',
-						returnStdout: true
-					).trim()
+					if ( params.domain == true ) {
+						def GET_DOMAIN = sh (
+							script: 'echo s' + params.number + '.rbt1.ru',
+							label: 'Get domain name',
+							returnStdout: true
+						).trim()
+					}	else	{
+						GET_DOMAIN = sh (
+							script: 'echo null',
+							label: 'Get domain name',
+							returnStdout: true
+						).trim()
+					}
 					def GET_INIP = sh (
 						script: 'echo 10.20.' + params.number + '.1',
 						label: 'Get router ip',
@@ -66,10 +79,25 @@ pipeline {
 						label: 'Get domain name',
 						returnStdout: true
 					).trim()
-//					sh (script: "mysql -h 192.168.102.2 -u kalinkin -p159753 RBT -Bse \"INSERT INTO rbt(Name,Domain) VALUES(${number},'s150.rbt1.ru')\" -D RBT")
 					sh (script: "mysql -h 192.168.102.2 -u kalinkin -p159753 RBT -Bse \"INSERT INTO rbt(Name,Domain,In_IP,ATC_IP,City,Adress,Domain_Controller,VMWare,Port,Type,timezone,virtual) VALUES('$number','$GET_DOMAIN','$GET_INIP','$GET_ATS','$city','$street','$GET_DC','$GET_VIRT','$port','$type','$timezone','$virtual')\" -D RBT")
-//					sh (script: 'mysql -h 192.168.102.2 -u kalinkin -p159753 RBT -Bse "INSERT INTO rbt VALUES (${number},' + GET_DOMAIN + ',' + GET_INIP + ',null,' + GET_ATS + ',null,null,null,null,null,${city},\"${street}\",null,null,null,' + GET_DC + ',null,null,null,null,' + GET_VIRT + ',${port},${type},null,null,${timezone},null,null,null,null,null,${virtual})" -D RBT')
-//					sh (script: 'mysql -h 192.168.102.2 -u kalinkin -p159753 -Bse "USE RBT;INSERT INTO rbt (Name,Domain,In_IP,ATC_IP,Domain_Controller,VMWare,City,Adress,Port,Type,timezone,virtual) VALUES(${number},' + GET_DOMAIN + ',' + GET_INIP + ',' + GET_ATS + ',' + GET_DC + ',' + GET_VIRT + ',${city},\"${street}\",${port},${type},${timezone},${virtual});"')
+//					sh (script: "mysql -h 192.168.102.2 -u kalinkin -p159753 RBT -Bse "UPDATE rbt SET Backup_server= '10.20.150.8' WHERE Name = 150" -D RBT")
+				}
+			}
+		}
+		stage("Update DB") {
+			when {
+				expression { params.update == update }
+			}
+			steps {
+				script {
+/**					GET_NameDC = sh (
+						script: '''
+						nmap
+						''',
+						label: '',
+						returnStdout: true
+					)*/
+					echo "Hello"
 				}
 			}
 		}
