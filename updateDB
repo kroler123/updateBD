@@ -76,9 +76,14 @@ pipeline {
 						).trim()		
 					return GET_INIP			
 					} */
+					def GET_DOMAIN_VAR = sh (
+						script: 'echo true',
+						label: 'Get domain name',
+						returnStdout: true
+					).trim()
 					GET_DOMAIN = sh (
 						script: '''
-						if ( $params.domain == true ) then
+						if ( $GET_DOMAIN_VAR == true ) then
 						echo s' + params.number + '.rbt1.ru
 						else
 						echo null
