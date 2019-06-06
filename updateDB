@@ -46,8 +46,8 @@ pipeline {
 			}
 			steps {
 				script {
-					if ( params.domain == true ) {
-/**						def GET_DOMAIN = sh (
+/**					if ( params.domain == true ) {
+						def GET_DOMAIN = sh (
 							script: 'echo s' + params.number + '.rbt1.ru',
 							label: 'Get domain name',
 							returnStdout: true
