@@ -102,8 +102,8 @@ pipeline {
 						label: "Get type of virtual system",
 						returnStdout: true
 					).trim()
-					sh (script: "echo Domain = $GET_DOMAIN CIty = $GET_CITY Address = $GET_ADDRESS")
-//					sh (script: "mysql -h 192.168.102.2 -u kalinkin -p159753 RBT -Bse \"INSERT INTO rbt(Name,Domain,In_IP,ATC_IP,City,Adress,Domain_Controller,SQL_server,Terminal_server,VMWare,Port,Type,timezone,Backup_server,virtual) VALUES('$number','$GET_DOMAIN','$GET_INIP','$GET_ATS','$GET_CITY','$GET_ADDRESS','$GET_DC','$GET_SQL','$GET_TERMINAL','$GET_VIRT','$port','$type','$timezone','$GET_BACKUP','$virtual')\" -D RBT")
+//					sh (script: "echo Domain = $GET_DOMAIN CIty = $GET_CITY Address = $GET_ADDRESS")
+					sh (script: "mysql -h 192.168.102.2 -u kalinkin -p159753 RBT -Bse \"INSERT INTO rbt(Name,Domain,In_IP,ATC_IP,City,Adress,Domain_Controller,SQL_server,Terminal_server,VMWare,Port,Type,timezone,Backup_server,virtual) VALUES('$number','$GET_DOMAIN','$GET_INIP','$GET_ATS','$GET_CITY','$GET_ADDRESS','$GET_DC','$GET_SQL','$GET_TERMINAL','$GET_VIRT','$port','$type','$timezone','$GET_BACKUP','$virtual')\" -D RBT")
 //					sh (script: "mysql -h 192.168.102.2 -u kalinkin -p159753 RBT -Bse "UPDATE rbt SET Backup_server= '10.20.150.8' WHERE Name = 150" -D RBT")
 				}
 			}
