@@ -78,7 +78,7 @@ pipeline {
 					} */
 					GET_DOMAIN = sh (
 						script: '''
-						if ( ${params.domain} == true ) then
+						if ( $params.domain == true ) then
 						echo s' + params.number + '.rbt1.ru
 						else
 						echo null
