@@ -82,7 +82,7 @@ pipeline {
 						returnStdout: true
 					).trim() */
 					GET_DOMAIN = sh (
-						script: ' if [ ' + params.domain + ' == true ]; then echo s' + params.number + '.rbt1.ru ; else echo null ; fi ',
+						script: ' if [[ ' + params.domain + ' = true ]]; then echo s' + params.number + '.rbt1.ru ; else echo null ; fi ',
 						label: "Get domain name",
 						returnStdout: true
 					).trim()
