@@ -21,6 +21,12 @@ pipeline {
 
 		booleanParam(name: 'virt',defaultValue: true ,description: 'Take the ip address Proxmox/VMware from salon number')
 
+		booleanParam(name: 'backup',defaultValue: true ,description: 'Take the ip address sql server from salon number')
+
+		booleanParam(name: 'sql',defaultValue: true ,description: 'Take the ip address backup server from salon number')
+
+		booleanParam(name: 'terminal',defaultValue: true ,description: 'Take the ip address terminal server from salon number')
+
 		string(name: 'city',defaultValue: '',description: 'Enter the name of the city')
 
 		string(name: 'street',defaultValue: '',description: 'Enter address')
@@ -71,18 +77,33 @@ pipeline {
 						label: "Get type of virtual system",
 						returnStdout: true
 					).trim()
+					GET_BACKUP = sh (
+						script: 'if [ "' + params.backup + '" = "true" ]; then echo 10.20.' + params.number + '.8 ; else echo null ; fi ',
+						label: "Get backup ip address",
+						returnStdout: true
+					).trim()
+					GET_SQL = sh (
+						script: 'if [ "' + params.sql + '" = "true" ]; then echo 10.20.' + params.number + '.5 ; else echo null ; fi ',
+						label: "Get sql ip address",
+						returnStdout: true
+					).trim()
+					GET_TERMINAL = sh (
+						script: 'if [ "' + params.terminal + '" = "true" ]; then echo 10.20.' + params.number + '.5 ; else echo null ; fi ',
+						label: "Get terminal ip address",
+						returnStdout: true
+					).trim()
 					GET_CITY = sh (
 						script: 'if [ "' + params.city + '" = "" ]; then echo null ; else echo ' + params.city + ' ; fi ',
 						label: "Get type of virtual system",
 						returnStdout: true
 					).trim()
 					GET_ADDRESS = sh (
-						script: 'if [ "' + params.address + '" = "" ]; then echo null ; else echo ' + params.address + ' ; fi ',
+						script: 'if [ "' + params.street + '" = "" ]; then echo null ; else echo ' + params.address + ' ; fi ',
 						label: "Get type of virtual system",
 						returnStdout: true
 					).trim()
 					sh (script: "echo Domain = $GET_DOMAIN CIty = $GET_CITY Address = $GET_ADDRESS")
-//					sh (script: "mysql -h 192.168.102.2 -u kalinkin -p159753 RBT -Bse \"INSERT INTO rbt(Name,Domain,In_IP,ATC_IP,City,Adress,Domain_Controller,VMWare,Port,Type,timezone,virtual) VALUES('$number','$GET_DOMAIN','$GET_INIP','$GET_ATS','$city','$street','$GET_DC','$GET_VIRT','$port','$type','$timezone','$virtual')\" -D RBT")
+//					sh (script: "mysql -h 192.168.102.2 -u kalinkin -p159753 RBT -Bse \"INSERT INTO rbt(Name,Domain,In_IP,ATC_IP,City,Adress,Domain_Controller,SQL_server,Terminal_server,VMWare,Port,Type,timezone,Backup_server,virtual) VALUES('$number','$GET_DOMAIN','$GET_INIP','$GET_ATS','$GET_CITY','$GET_ADDRESS','$GET_DC','$GET_SQL','$GET_TERMINAL','$GET_VIRT','$port','$type','$timezone','$GET_BACKUP','$virtual')\" -D RBT")
 //					sh (script: "mysql -h 192.168.102.2 -u kalinkin -p159753 RBT -Bse "UPDATE rbt SET Backup_server= '10.20.150.8' WHERE Name = 150" -D RBT")
 				}
 			}
