@@ -71,7 +71,17 @@ pipeline {
 						label: "Get type of virtual system",
 						returnStdout: true
 					).trim()
-					sh (script: "echo $GET_DOMAIN")
+					GET_CITY = sh (
+						script: 'if [ "' + params.city + '" = "" ]; then echo null ; else echo ' + params.city + ' ; fi ',
+						label: "Get type of virtual system",
+						returnStdout: true
+					).trim()
+					GET_ADDRESS = sh (
+						script: 'if [ "' + params.address + '" = "" ]; then echo null ; else echo ' + params.address + ' ; fi ',
+						label: "Get type of virtual system",
+						returnStdout: true
+					).trim()
+					sh (script: "echo Domain = $GET_DOMAIN CIty = $GET_CITY Address = $GET_ADDRESS")
 //					sh (script: "mysql -h 192.168.102.2 -u kalinkin -p159753 RBT -Bse \"INSERT INTO rbt(Name,Domain,In_IP,ATC_IP,City,Adress,Domain_Controller,VMWare,Port,Type,timezone,virtual) VALUES('$number','$GET_DOMAIN','$GET_INIP','$GET_ATS','$city','$street','$GET_DC','$GET_VIRT','$port','$type','$timezone','$virtual')\" -D RBT")
 //					sh (script: "mysql -h 192.168.102.2 -u kalinkin -p159753 RBT -Bse "UPDATE rbt SET Backup_server= '10.20.150.8' WHERE Name = 150" -D RBT")
 				}
