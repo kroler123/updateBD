@@ -83,7 +83,7 @@ pipeline {
 					).trim()
 					GET_DOMAIN = sh (
 						script: '''
-						if ( $GET_DOMAIN_VAR == true ) then
+						if ( $GET_DOMAIN_VAR -eq true ) then
 						echo s' + params.number + '.rbt1.ru
 						else
 						echo null
